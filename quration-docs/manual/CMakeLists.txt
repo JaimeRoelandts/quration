@@ -3,7 +3,7 @@ project(QurationDocs NONE)
 
 find_program(PANDOC_EXECUTABLE pandoc REQUIRED)
 
-set(DOC_OUTPUT_DIR "${CMAKE_BINARY_DIR}/man/man1")
+set(DOC_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/man/man1")
 file(MAKE_DIRECTORY ${DOC_OUTPUT_DIR})
 
 file(GLOB_RECURSE MARKDOWN_FILES "**/*.md")
@@ -43,3 +43,7 @@ foreach(MD_FILE ${MARKDOWN_FILES})
 endforeach()
 
 add_custom_target(docs ALL DEPENDS ${ALL_MAN_OUTPUTS})
+
+set_directory_properties(
+  PROPERTIES ADDITIONAL_CLEAN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/man"
+)
