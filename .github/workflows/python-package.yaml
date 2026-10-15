@@ -152,9 +152,6 @@ jobs:
             macOS)   cp "$PWD/externals/bin/gridsynth_macos" "$pkg_dir/gridsynth" ;;
             *)       cp "$PWD/externals/bin/gridsynth"       "$pkg_dir/gridsynth" ;;
           esac
-          if [ "$RUNNER_OS" != "Windows" ]; then
-            chmod +x "$pkg_dir/gridsynth"
-          fi
 
           # Provenance and license notice for the bundled binary.
           cp "$PWD/externals/bin/README.md" "$pkg_dir/README.md"
