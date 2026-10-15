@@ -76,10 +76,8 @@ export LD_LIBRARY_PATH="$PWD/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"        # 
 export DYLD_LIBRARY_PATH="$PWD/lib${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"  # macOS
 ```
 
-`qret` shells out to `gridsynth` to decompose rotation gates, and looks it up
-through `GRIDSYNTH_PATH`, the cabal install directories, the working directory
-and `PATH` -- never `bin/`. Point it at the bundled copy, giving the full path
-to the binary rather than the directory holding it:
+`qret` uses `gridsynth` to decompose rotation gates.
+Set `GRIDSYNTH_PATH` to the bundled binary (the file itself, not its directory):
 
 ```sh
 export GRIDSYNTH_PATH="$PWD/bin/gridsynth"   # Linux, macOS
@@ -88,9 +86,6 @@ export GRIDSYNTH_PATH="$PWD/bin/gridsynth"   # Linux, macOS
 ```bat
 set GRIDSYNTH_PATH=%CD%\bin\gridsynth.exe
 ```
-
-Without it, any pass that decomposes a rotation fails with
-`cannot run gridsynth for this path: gridsynth`.
 
 `qret` and the generators take every path as an argument, so they run from
 anywhere. Three examples -- `compile_adder_to_distributed_chip`,
