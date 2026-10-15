@@ -87,11 +87,7 @@ export GRIDSYNTH_PATH="$PWD/bin/gridsynth"   # Linux, macOS
 set GRIDSYNTH_PATH=%CD%\bin\gridsynth.exe
 ```
 
-`qret` and the generators take every path as an argument, so they run from
-anywhere. Three examples -- `compile_adder_to_distributed_chip`,
-`external_mapping_pass` and `external_decompose_pass` -- instead read their
-input through paths hard-coded relative to the working directory, so run those
-**from the extracted root**.
+Then run the binaries:
 
 ```sh
 ./bin/qret --help
@@ -99,6 +95,9 @@ input through paths hard-coded relative to the working directory, so run those
   --input quration-algorithm/benchmark_generators/data/sample_qpe.json \
   --output qpe.json
 ```
+
+`qret` and the generators take all paths as arguments and run from anywhere.
+`compile_adder_to_distributed_chip`, `external_mapping_pass`, and `external_decompose_pass` read files relative to the working directory, so run them from the extracted root.
 
 
 ## Build Quration-Core and Quration-Algorithm from source
