@@ -42,9 +42,65 @@ See `./quration-docs/tutorial/` for tutorials of these programs.
 - `quration-visualizer`: Visualize execution traces and compare resource estimation profiles on browers
 
 
-## Install Quration-Core and Quration-Algorithm
+## Install prebuilt binaries
 
-Currently we only support build from source. Pre-build executables, python libraries, and C++ shared library will be distributed soon.
+Each GitHub Release carries an archive per platform:
+
+| Platform | Asset |
+| --- | --- |
+| Linux (x86_64) | `qret-ubuntu-latest.tar.gz` |
+| macOS (Apple Silicon) | `qret-macos-latest.tar.gz` |
+| Windows (x64) | `qret-windows-latest.zip` |
+
+Download from the command line.
+
+```sh
+gh release download <tag> -R quration/quration -p 'qret-ubuntu-latest.tar.gz'
+# or
+curl -LO https://github.com/quration/quration/releases/download/<tag>/qret-ubuntu-latest.tar.gz
+```
+
+Extract it:
+
+```sh
+tar xzf qret-ubuntu-latest.tar.gz        # tar -xf qret-windows-latest.zip on Windows
+cd qret-ubuntu-latest
+```
+
+On Linux and macOS the binaries carry no embedded library path, so point the
+dynamic linker at the bundled `lib/` before running them. Windows needs no
+library setup -- the DLLs are installed next to the executables in `bin/`.
+
+```sh
+export LD_LIBRARY_PATH="$PWD/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"        # Linux
+export DYLD_LIBRARY_PATH="$PWD/lib${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"  # macOS
+```
+
+`qret` uses `gridsynth` to decompose rotation gates.
+Set `GRIDSYNTH_PATH` to the bundled binary (the file itself, not its directory):
+
+```sh
+export GRIDSYNTH_PATH="$PWD/bin/gridsynth"   # Linux, macOS
+```
+
+```bat
+set GRIDSYNTH_PATH=%CD%\bin\gridsynth.exe
+```
+
+Then run the binaries:
+
+```sh
+./bin/qret --help
+./bin/create_qpe \
+  --input quration-algorithm/benchmark_generators/data/sample_qpe.json \
+  --output qpe.json
+```
+
+`qret` and the generators take all paths as arguments and run from anywhere.
+`compile_adder_to_distributed_chip`, `external_mapping_pass`, and `external_decompose_pass` read files relative to the working directory, so run them from the extracted root.
+
+
+## Build Quration-Core and Quration-Algorithm from source
 
 ### Environment
 
