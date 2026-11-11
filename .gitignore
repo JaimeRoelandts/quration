@@ -23,7 +23,6 @@ visualstudio
 *.swn
 Session.vim
 .nvimsessions/
-.editorconfig
 compile_commands.json
 
 ### cmake files ###
